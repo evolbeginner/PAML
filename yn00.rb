@@ -14,6 +14,8 @@ muscle = "muscle"
 dirname=File.dirname($0)
 run_yn00 = File.join(dirname, "run_yn00.pl")
 
+# You might also need yn00 installed and can be found in the default searching PATH.
+
 
 #################################################################
 def read_seq(seq_file)
