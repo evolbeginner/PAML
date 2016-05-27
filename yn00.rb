@@ -1,6 +1,12 @@
 #! /bin/env ruby
 
 
+# The script is to calculate Ka, Ks and Ka/Ks for gene pairs.
+# PAML, Perl, Ruby, Bioruby, MUSCLE and pal2nal.pl are needed. Please type 'ruby yn00.rb -h' to see the usage.
+# The script is written by Sishuo Wang from University of British Columbia and is free for anyone.
+# Please write e-mail to sishuowang@hotmail.com if you have any questions or want to report bugs. Your help will be highly appreciated.
+
+
 #################################################################
 require "getoptlong"
 require "bio"
@@ -91,7 +97,20 @@ end
 
 def help
   basename = File::basename($0)
-  puts "Usage: ruby #{basename} <-i|--pair infile> <--cds cds_file> <--pep pep_file> [options]"
+  puts "Usage: ruby #{basename} <-o|--out> <-i|--in|-p|--pair infile> <--cds cds_file> <--pep pep_file> [options]"
+  puts "Options:"
+  puts "--sep\t\tseparator between gene pairs"
+  puts "\t\tdefault\tTAB"
+  puts "--tmp\t\ttmp_outdir. Alignments will written to this folder."
+  puts "--sort\t\tsort gene names in the gene pair"
+  puts "--force\t\tremove tmp_outdir if it exists."
+  puts "\t\tdefault: disabled"
+  puts "-h|--help\thelp information"
+  puts
+  puts "Please make sure that related scripts/software are available before the script is run."
+  puts "Please specify the path the the scripts/software at the beginning of this script."
+  puts "Please write e-mail to sishuowang@hotmail.com for any question/suggestions."
+  puts
   exit
 end
 
