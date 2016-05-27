@@ -17,6 +17,7 @@ my $bioperl_yn00="bioperl_yn00.pl";
 my $run_yn00="run_yn00.pl";
 my $separator='_';
 
+
 #########################################################################################
 ($pep_file, $CDS_file, $duplicate_list, $outfile, $force_align, $force_pal2nal, $force_both, $seq_title_RegExp, $seq_title_RegExp_del, $separator) = &get_param();
 ($force_align, $force_pal2nal) = (1,1) if defined $force_both;
@@ -43,6 +44,7 @@ for my $pair_name(sort keys %pair){
 
 #system "rm -rf \"$temp_dir\"";
 
+
 ##########################################################################################
 sub generate_duplicate_rela
 {
@@ -51,7 +53,7 @@ my (%pair,%para);
 open(my $IN,'<',$duplicate_list) or die "cannot open duplicate_list file:$!";
 while(<$IN>){
 	chomp;
-	@line=split;
+	@line=split($separator);
 	$pair{join $separator,sort @line[0,1]}=1;
 	foreach(0..1){
 		$para{$line[$_]}=$line[1-$_];
@@ -60,6 +62,7 @@ while(<$IN>){
 close $IN;
 return (\%pair,\%para);
 }
+
 
 #----------------------------------------------#
 ########	sub-line function	########
@@ -76,6 +79,7 @@ sub create_temp_folder{
 	return ("$temp_dir");
 }
 
+
 #------------------------------------------------------------------------------------#
 sub get_param
 {
@@ -87,7 +91,7 @@ GetOptions(
 'dup_list=s'		=>	\$duplicate_list,
 'force_align!'		=>	\$force_align,
 'force_pal2nal!'	=>	\$force_pal2nal,
-'force_both!'		=>	\$force_both,
+'force_both|force!'	=>	\$force_both,
 'out=s'			=>	\$outfile,
 'seq_title_RegExp=s'    =>      \$seq_title_RegExp,
 'seq_title_RegExp_del=s'=>      \$seq_title_RegExp_del,

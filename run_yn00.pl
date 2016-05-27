@@ -11,6 +11,7 @@ use 5.010;
 my $yn00_ctl="$ENV{'HOME'}/software/phylo/paml4.7/yn00.ctl";
 my $codon_alignment;
 
+
 ###############################################################
 GetOptions(
     'i|in=s'   =>  \$codon_alignment,
@@ -19,6 +20,7 @@ GetOptions(
 my $tempdir = tempdir( CLEANUP => 1 );
 my $new_yn00_ctl="$tempdir/yn00.ctl";
 my $MLmatrix;
+
 
 ###############################################################
 my $basename_codon_alignment = basename($codon_alignment);
@@ -39,6 +41,7 @@ copy($codon_alignment,"$tempdir/$basename_codon_alignment") || die "copy failed!
 chdir($tempdir);
 `yn00`;
 chdir($cwd);
+
 
 ###############################################
 open(my $IN,'<',"$tempdir/yn") || die "cannot be opened!";

@@ -2,9 +2,9 @@
 use 5.010;
 use warnings;
 
-my $codemlctl_file="/home/sswang/software/paml4.7/codeml.ctl";
-my @parameter=($model,$NSsites,$seqfile,$treefile,$outfile,$ncatG,$seqtype);
-my @parameter_name = qw(model NSsites seqfile treefile outfile ncatG seqtype output_codemlctl_dir);
+my $codemlctl_file="/home/sswang/software/phylo/paml4.7/codeml.ctl";
+my @parameter=($model,$NSsites,$seqfile,$treefile,$outfile,$ncatG,$seqtype,$clock);
+my @parameter_name = qw(model NSsites seqfile treefile outfile ncatG seqtype output_codemlctl_dir clock);
 my $force;
 
 &read_parameter(@ARGV);
@@ -14,6 +14,7 @@ my $force;
 &create_codemlctl($codemlctl_file);
 
 &ShuChu_parameter(@parameter_name);
+
 
 ########################################
 ########################################
@@ -30,6 +31,7 @@ foreach (@para){
 	when (/^\-NSsites\=(.+)/)	{$NSsites=$1; $NSsites=&modify_NSsites($1)}
 	when (/^\-ncatG\=(.+)/)	{$ncatG=$1}
 	when (/^\-seqtype\=(.+)/)	{$seqtype=$1}
+	when (/^\-clock\=(.+)/)	{$clock=$1;}
 	#########################
 	when (/^\-output_codemlctl_dir\=(.+)/)	{$output_codemlctl_dir=$1}
 	when (/^\-\-?force/)	{$force='YES'}
@@ -50,6 +52,7 @@ foreach (@para){
 		when ('outfile')	{$outfile='mlc'}
 		when ('seqtype')	{$seqtype=1}
 		when ('ncatG')	{$ncatG=3}
+		when ('clock')	{$clock=0}
 		when ('output_codemlctl_dir')	{$output_codemlctl_dir='.'; &check_output_codemlctl_dir('.')}
 		}
 		}
@@ -97,6 +100,7 @@ while(my $line=<IN>)
 	when(/^\s+model/)	{$line=~s/\=(.+)/\= $model/}
 	when(/^\s+NSsites/)	{$line=~s/(?<=NSsites \=)[^\*]+(?=\*)/ $NSsites /}
 	when(/^\s+ncatG/)	{$line=~s/(?<=ncatG \=)[^\*]+(?=\*)/ $ncatG /}
+	when(/^\s+clock/)	{$line=~s/(?<=clock \=)[^\*]+(?=\*)/ $clock /}
 	}
 	print OUT $line."\n";
 }
@@ -149,10 +153,9 @@ sub ShuChu_parameter
 }
 
 
-sub usage
-{
-my $usage="usage:\t-model -NSsites -seqfile -treefile -outfile -ncatG -seqtype -output_codemlctl_dir";
-system "print_color.pl \"$usage\" 'bold blue'";
+sub usage{
+    my $usage="usage:\t-model -NSsites -seqfile -treefile -outfile -ncatG -seqtype -output_codemlctl_dir";
+    system "print_color.pl \"$usage\" 'bold blue'";
 }
 
 
